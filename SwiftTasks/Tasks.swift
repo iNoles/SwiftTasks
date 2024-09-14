@@ -9,14 +9,17 @@ import Foundation
 import SwiftData
 
 @Model
-final class Tasks {
+final class Tasks: ObservableObject {
     var title: String
     var notes: String
-    var isCompleted: Bool
+    var category: String
+    var dueDate: Date?
+    var isCompleted: Bool = false
     
-    init(title: String, notes: String, isCompleted: Bool) {
+    init(title: String, notes: String, category: String = "Uncategorized", dueDate: Date? = nil) {
         self.title = title
         self.notes = notes
-        self.isCompleted = isCompleted
+        self.category = category
+        self.dueDate = dueDate
     }
 }

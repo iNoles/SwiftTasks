@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 @main
 struct SwiftTasksApp: App {
@@ -26,7 +27,24 @@ struct SwiftTasksApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear {
+                    requestNotificationPermission()
+                }
         }
         .modelContainer(sharedModelContainer)
+    }
+    
+    func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+            if granted {
+                print("Notifications permission granted")
+            } else {
+                print("Notifications permission denied")
+            }
+
+            if let error = error {
+                print("Error requesting notification permission: \(error.localizedDescription)")
+            }
+        }
     }
 }

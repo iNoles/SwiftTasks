@@ -10,24 +10,50 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Tasks]
+    @State private var selectedCategory: String = "All"
     @State private var isAddingTask = false // State to control the sheet presentation
+    @Query private var items: [Tasks]
+    
+    private var filteredItems: [Tasks] {
+            if selectedCategory == "All" {
+                return items
+            } else {
+                return items.filter { $0.category == selectedCategory }
+            }
+        }
 
     var body: some View {
         NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink(destination: TodoDetailView(tasks: item)) {
-                        VStack(alignment: .leading) {
-                            Text(item.title).font(.headline)
-                            Text(item.notes)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                                .lineLimit(1) // Show only one line of notes
+            VStack {
+                Picker("Select Category", selection: $selectedCategory) {
+                    Text("All").tag("All")
+                    Text("Work").tag("Work")
+                    Text("Personal").tag("Personal")
+                    Text("Health").tag("Health")
+                    Text("Shopping").tag("Shopping")
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+                
+                List {
+                    ForEach(filteredItems) { item in
+                        NavigationLink(destination: TodoDetailView(task: item)) {
+                            VStack(alignment: .leading) {
+                                Text(item.title).font(.headline)
+                                Text(item.notes)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                    .lineLimit(1) // Show only one line of notes
+                                if let dueDate = item.dueDate {
+                                    Text("Due: \(dueDate, style: .date) at \(dueDate, style: .time)")
+                                        .font(.footnote)
+                                        .foregroundColor(.gray)
+                                }
+                            }
                         }
                     }
+                    .onDelete(perform: deleteTasks)
                 }
-                .onDelete(perform: deleteTasks)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -42,16 +68,17 @@ struct ContentView: View {
         } detail: {
             Text("Select a task")
         }.sheet(isPresented: $isAddingTask) {
-            AddTaskView(isPresented: $isAddingTask) { title, notes in
-                addTask(title: title, notes: notes)
+            AddTaskView(isPresented: $isAddingTask) { title, notes, catalog, dueDate in
+                addTask(title: title, notes: notes, category: catalog, dueDate: dueDate)
             }
         }
     }
 
-    private func addTask(title: String, notes: String) {
+    private func addTask(title: String, notes: String, category: String, dueDate: Date?) {
         withAnimation {
-            let newItem = Tasks(title: title, notes: notes, isCompleted: false)
-            modelContext.insert(newItem)
+            let newTasks = Tasks(title: title, notes: notes, category: category, dueDate: dueDate)
+            modelContext.insert(newTasks)
+            scheduleNotification(for: newTasks)
         }
     }
 
@@ -59,6 +86,23 @@ struct ContentView: View {
         withAnimation {
             for index in offsets {
                 modelContext.delete(items[index])
+            }
+        }
+    }
+    
+    private func scheduleNotification(for task: Tasks) {
+        let content = UNMutableNotificationContent()
+        content.title = "Task Reminder"
+        content.body = "Your task \"\(task.title)\" is due soon."
+        content.sound = .default
+            
+        let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: task.dueDate!)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
+            
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error scheduling notification: \(error.localizedDescription)")
             }
         }
     }
