@@ -12,7 +12,11 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var selectedCategory: String = "All"
     @State private var isAddingTask = false // State to control the sheet presentation
+    @State private var isEditingTask = false
+    @State private var selectedTask: Tasks?
+    
     @Query private var items: [Tasks]
+    
     
     private var filteredItems: [Tasks] {
             if selectedCategory == "All" {
@@ -50,6 +54,13 @@ struct ContentView: View {
                                         .foregroundColor(.gray)
                                 }
                             }
+                        }.contextMenu {
+                            Button(action: {
+                                selectedTask = item
+                                isEditingTask = true
+                            }) {
+                                Label("Edit", systemImage: "pencil")
+                            }
                         }
                     }
                     .onDelete(perform: deleteTasks)
@@ -70,6 +81,12 @@ struct ContentView: View {
         }.sheet(isPresented: $isAddingTask) {
             AddTaskView(isPresented: $isAddingTask) { title, notes, catalog, dueDate in
                 addTask(title: title, notes: notes, category: catalog, dueDate: dueDate)
+            }
+        }.sheet(isPresented: $isEditingTask, onDismiss: {
+            selectedTask = nil // Reset selected task after editing
+        }) {
+            if let taskToEdit = selectedTask {
+                EditTaskView(task: .constant(taskToEdit), isPresented: $isEditingTask)
             }
         }
     }
