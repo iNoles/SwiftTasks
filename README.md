@@ -4,11 +4,12 @@ SwiftTasks is a sleek to-do list application for iOS 18.0+ and iPadOS 18.0+, lev
 
 ## Features
 
-- **Add Tasks**: Create new tasks with titles and optional notes.
-- **View Tasks**: Display a list of tasks with titles and brief notes.
-- **Edit Tasks**: Modify task titles and notes easily.
+- **Add Tasks**: Create new tasks with titles, optional notes, categories, and due dates.
+- **View Tasks**: Display a list of tasks with titles, brief notes, categories, and due dates.
+- **Edit Tasks**: Modify task titles, notes, categories, and due dates easily.
 - **Delete Tasks**: Remove tasks with a swipe action.
-- **Offline Persistence**: Tasks are stored locally on the device and persist across app launches.
+- **Offline Persistence**: Tasks are stored locally on the device using SwiftData, ensuring that your data is available even without an internet connection.
+- **Task Notifications**: Receive notifications for tasks as their due date approaches.
 
 ## Getting Started
 
