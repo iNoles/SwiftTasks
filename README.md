@@ -4,12 +4,12 @@ SwiftTasks is a sleek to-do list application leveraging SwiftUI and SwiftData fo
 
 ## Features
 
-- **Add Tasks**: Create new tasks with titles, optional notes, categories, and due dates.
-- **View Tasks**: Display a list of tasks with titles, brief notes, categories, and due dates.
-- **Edit Tasks**: Modify task titles, notes, categories, and due dates easily.
-- **Delete Tasks**: Remove tasks with a swipe action.
-- **Offline Persistence**: Tasks are stored locally on the device using SwiftData, ensuring that your data is available even without an internet connection.
-- **Task Notifications**: Receive notifications for tasks as their due date approaches.
+- **Offline Persistence**: Task data is stored locally on the device using SwiftData, so you can manage your tasks even without an internet connection.
+- **Add, Edit, and Delete Tasks**: Create new tasks, modify existing ones, and delete tasks that you no longer need with ease.
+- **Categories for Tasks**: Organize your tasks by selecting from pre-defined categories like *Work*, *Personal*, *Home*, and more.
+- **Due Date Reminders**: Set due dates for tasks and receive reminders, so you never miss a deadline.
+- **Task Completion Toggle**: Mark tasks as completed with a simple toggle, helping you keep track of what’s done and what’s pending.
+- **User Notifications**: Get notified when a task's due date is approaching, ensuring you stay on top of your tasks.
 
 ## Getting Started
 
@@ -28,4 +28,4 @@ SwiftTasks is a sleek to-do list application leveraging SwiftUI and SwiftData fo
 - SwiftData
 
 ## Contributing
-Contributions are welcome! Please fork the repository, create a new branch, and submit a pull request for any improvements or bug fixes.
+Contributions are welcome! Please fork the repository, create a new branch, and submit a pull request for improvements or bug fixes.
