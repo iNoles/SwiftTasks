@@ -1,6 +1,6 @@
 # SwiftTasks
 
-SwiftTasks is a sleek to-do list application for iOS 18.0+ and iPadOS 18.0+, leveraging SwiftUI and SwiftData for a seamless offline task management experience. Effortlessly manage your tasks with an intuitive interface, whether you're adding, editing, or deleting items. SwiftTasks ensures your task data is always accessible, even without an internet connection.
+SwiftTasks is a sleek to-do list application leveraging SwiftUI and SwiftData for a seamless offline task management experience. Effortlessly manage your tasks with an intuitive interface, whether you're adding, editing, or deleting items. SwiftTasks ensures your task data is always accessible, even without an internet connection.
 
 ## Features
 
