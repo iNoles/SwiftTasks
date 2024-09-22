@@ -17,7 +17,6 @@ struct ContentView: View {
     
     @Query private var items: [Tasks]
     
-    
     private var filteredItems: [Tasks] {
             if selectedCategory == "All" {
                 return items
