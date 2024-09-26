@@ -11,6 +11,13 @@ SwiftTasks is a sleek to-do list application leveraging SwiftUI and SwiftData fo
 - **Task Completion Toggle**: Mark tasks as completed with a simple toggle, helping you keep track of what’s done and what’s pending.
 - **User Notifications**: Get notified when a task's due date is approaching, ensuring you stay on top of your tasks.
 
+### Prerequisites
+
+Make sure you have the following installed:
+- **Xcode 16+**
+- **Swift 6**
+- **iOS 18.0+ / iPadOS 18.0+**
+
 ## Getting Started
 
 1. **Clone the Repository**:
@@ -21,11 +28,6 @@ SwiftTasks is a sleek to-do list application leveraging SwiftUI and SwiftData fo
 2. Open in Xcode: `Open SwiftTasks.xcodeproj` in Xcode.
 
 3. Run the App: Select a simulator or a connected device and press `Cmd+R` to build and run the app.
-
-## Requirements
-- iOS 18.0+ / iPadOS 18.0+
-- SwiftUI
-- SwiftData
 
 ## Contributing
 Contributions are welcome! Please fork the repository, create a new branch, and submit a pull request for improvements or bug fixes.
