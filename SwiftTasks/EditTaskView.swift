@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EditTaskView: View {
-    @Binding var task: Tasks
+    @Binding var task: ToDoTask
     @Binding var isPresented: Bool
 
     @State private var title: String
@@ -19,7 +19,7 @@ struct EditTaskView: View {
     
     let categories = ["Work", "Personal", "Fitness", "Errands", "Uncategorized"] // Example categories
 
-    init(task: Binding<Tasks>, isPresented: Binding<Bool>) {
+    init(task: Binding<ToDoTask>, isPresented: Binding<Bool>) {
         _task = task
         _isPresented = isPresented
         _title = State(initialValue: task.wrappedValue.title)
@@ -78,6 +78,6 @@ struct EditTaskView: View {
 
 #Preview {
     // Example preview with mock data
-    let mockTask = Tasks(title: "Sample Task", notes: "Some notes", category: "Personal", dueDate: Date())
+    let mockTask = ToDoTask(title: "Sample Task", notes: "Some notes", category: "Personal", dueDate: Date())
     return EditTaskView(task: .constant(mockTask), isPresented: .constant(true))
 }

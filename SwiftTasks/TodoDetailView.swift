@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftData
 
 struct TodoDetailView: View {
-    @ObservedObject var task: Tasks
+    @ObservedObject var task: ToDoTask
 
     var body: some View {
         NavigationView {
@@ -58,6 +58,6 @@ struct TodoDetailView: View {
 }
 
 #Preview {
-    TodoDetailView(task: Tasks(title: "Sample Task", notes: "Sample notes", category: "Work", dueDate: Date()))
-        .modelContainer(for: Tasks.self, inMemory: true)
+    TodoDetailView(task: ToDoTask(title: "Sample Task", notes: "Sample notes", category: "Work", dueDate: Date()))
+        .modelContainer(for: ToDoTask.self, inMemory: true)
 }

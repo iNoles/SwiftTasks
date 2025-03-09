@@ -11,40 +11,31 @@ import UserNotifications
 
 @main
 struct SwiftTasksApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Tasks.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+    @StateObject private var taskManagerWrapper: TaskManagerWrapper
 
+    init() {
         do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            let schema = Schema([ToDoTask.self])
+            let container = try ModelContainer(for: schema)
+            _taskManagerWrapper = StateObject(wrappedValue: TaskManagerWrapper(container: container))
         } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+            fatalError("Failed to initialize ModelContainer: \(error)")
         }
-    }()
+    }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .onAppear {
-                    requestNotificationPermission()
-                }
+                .environmentObject(taskManagerWrapper)
         }
-        .modelContainer(sharedModelContainer)
     }
     
-    func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
-            if granted {
-                print("Notifications permission granted")
-            } else {
-                print("Notifications permission denied")
-            }
-
-            if let error = error {
-                print("Error requesting notification permission: \(error.localizedDescription)")
-            }
+    func requestNotificationPermission() async {
+        do {
+            let granted = try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound])
+            print(granted ? "Notifications permission granted" : "Notifications permission denied")
+        } catch {
+            print("Error requesting notification permission: \(error.localizedDescription)")
         }
     }
 }

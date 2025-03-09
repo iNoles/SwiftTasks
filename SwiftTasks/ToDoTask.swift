@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Tasks: ObservableObject {
+final class ToDoTask: ObservableObject, @unchecked Sendable {
     var title: String
     var notes: String
     var category: String
